@@ -43,7 +43,9 @@ services:
       dockerfile: Dockerfile
     container_name: market_frontend
     volumes:
-      - ./frontend/src:/app
+      - ./frontend:/app
+      # 追加
+      - node_modules:/app/node_modules # これがないとnode_modulesが消える
     ports:
       - "8080:8080"
     depends_on:
@@ -53,3 +55,5 @@ services:
 
 volumes:
   postgres_data:
+
+  node_modules: # 追加

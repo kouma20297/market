@@ -1,4 +1,4 @@
-# app
+# src
 
 ## Project setup
 ```
