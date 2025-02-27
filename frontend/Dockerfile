@@ -1,0 +1,12 @@
+FROM node:16-alpine
+
+WORKDIR /app  
+
+COPY package.json package-lock.json ./  
+RUN npm install  
+
+COPY src ./src/
+
+CMD ["npm", "run", "serve"]
+
+# CMD ["sleep", "infinity"]

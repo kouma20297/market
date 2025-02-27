@@ -1,0 +1,55 @@
+# General
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# VS Code
+.vscode/
+
+# Node.js (frontend)
+/frontend/node_modules/
+
+# Python (backend)
+/backend/src/__pycache__/
+/backend/src/**/*.pyc
+/backend/src/**/*.pyo
+/backend/src/**/*.pyd
+/backend/src/.pytest_cache/
+/backend/src/.venv/  # 仮想環境 (もし使っている場合)
+
+# Django
+# /backend/src/db.sqlite3  # SQLite は使わないのでコメントアウト
+/backend/src/media/     # メディアファイル (通常は Git 管理外)
+/backend/src/static/    # 静的ファイル (通常は collectstatic で収集)
+
+# Docker
+.dockerignore
+
+# Environment files
+.env
+/backend/.env
+/frontend/.env
+/frontend/.env.*
+
+# DevContainer
+.devcontainer/
+
+# macOS
+._*
+
+# JetBrains IDEs (PyCharm, IntelliJ IDEA, etc.)
+.idea/
+
+# Vim
+*.swp
+*.swo
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Editor/IDE specific
+*.bak
+*.orig

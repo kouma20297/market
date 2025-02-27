@@ -1,0 +1,8 @@
+Django>=3.2,<5.0  # Django のバージョン範囲を指定
+djangorestframework>=3.13,<4.0  # DRF のバージョン範囲を指定
+psycopg2-binary>=2.9,<3.0  # PostgreSQL アダプタ (バイナリ版)
+django-cors-headers  # CORS 対応 (必要に応じて)
+djangorestframework-simplejwt  # JWT 認証 (必要に応じて)
+gunicorn  # WSGI サーバー (本番環境用, 必要に応じて)
+python-dotenv # 環境変数管理
+# その他、プロジェクトに必要なパッケージ
