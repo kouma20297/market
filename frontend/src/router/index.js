@@ -1,8 +1,9 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
-import About from '../views/About.vue'; // 追加
-import Contact from '../views/Contact.vue'; // 追加
+import WorksAndldeasPage from '@/views/WorksAndldeasPage.vue' 
+import LoginRegister from '../views/LoginRegister.vue';
+import TrendingArticles from '../views/TrendingArticles.vue';
 
 const routes = [
   {
@@ -10,15 +11,23 @@ const routes = [
     name: 'Home',
     component: HomeView,
   },
+  
+
+
   {
-    path: '/about',
-    name: 'about',  // RouterLink の to="{ name: 'about' }" と一致
-    component: About,
+    path: '/works-and-ideas',
+    name: 'WorksAndldeasPage',
+    component: WorksAndldeasPage
   },
   {
-    path: '/contact',
-    name: 'contactus', // RouterLink の to="{ name: 'contactus' }" と一致
-    component: Contact,
+    path: '/login-register',
+    name: 'LoginRegister',
+    component: LoginRegister
+  },
+  {
+    path: '/trending-articles',
+    name: 'TrendingArticles',
+    component: TrendingArticles
   },
 ];
 

@@ -1,155 +1,77 @@
-<script setup>
-import { RouterLink } from "vue-router";
-import { ref, watch, onMounted } from "vue";
-
-const props = defineProps({
-  transparent: {
-    type: Boolean,
-    default: false,
-  },
-  light: {
-    type: Boolean,
-    default: false,
-  },
-  dark: {
-    type: Boolean,
-    default: false,
-  },
-  sticky: {
-    type: Boolean,
-    default: false,
-  },
-  darkText: {
-    type: Boolean,
-    default: false,
-  },
-});
-
-// ウィンドウ幅に基づいて type (desktop/mobile) を決定
-const getWindowWidth = () => window.innerWidth;
-const windowWidth = ref(getWindowWidth());
-const type = ref(windowWidth.value > 768 ? "desktop" : "mobile");
-
-const updateWindowWidth = () => {
-  windowWidth.value = getWindowWidth();
-  type.value = windowWidth.value > 768 ? "desktop" : "mobile";
-};
-
-onMounted(() => {
-  window.addEventListener("resize", updateWindowWidth);
-});
-
-// テキストカラーの取得
-const getTextColor = () => {
-  let color;
-  if (props.transparent && textDark.value) {
-    color = "text-dark";
-  } else if (props.transparent) {
-    color = "text-white";
-  } else {
-    color = "text-dark";
-  }
-  return color;
-};
-
-// textDark の値を type に基づいて更新
-let textDark = ref(props.darkText);
-
-watch(
-  () => type.value,
-  (newValue) => {
-    if (newValue === "mobile") {
-      textDark.value = true;
-    } else {
-      textDark.value = type.value === "desktop" ? props.darkText : true;
-    }
-  }
-);
-</script>
-
 <template>
-  <header
-    :class="{
-      'bg-transparent': props.transparent,
-      'bg-white': props.light,
-      'bg-dark': props.dark,
-      'sticky top-0': props.sticky,
-    }"
-  >
-    <nav class="navbar navbar-expand-lg">
-      <div class="container">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <RouterLink class="nav-link" :class="getTextColor()" :to="{ path: '/' }">
-              Home
-            </RouterLink>
-          </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" :class="getTextColor()" :to="{ name: 'about' }">
-              About
-            </RouterLink>
-          </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" :class="getTextColor()" :to="{ name: 'contactus' }">
-              Contact
-            </RouterLink>
-          </li>
-        </ul>
+  <div class="font-sans">
+    <!-- ナビゲーションバー -->
+    <nav class="bg-white shadow-sm fixed w-full z-10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center">
+            <div class="flex-shrink-0 flex items-center">
+              <h1 class="text-xl font-bold text-gray-900">AppMarket</h1>
+            </div>
+            <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+              <router-link to="/"  class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                ホーム
+              </router-link>
+              <router-link 
+              to="/works-and-ideas" 
+              class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                    作品
+              </router-link>
+              <router-link 
+              to="/login-register"
+              class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                    ログイン / 登録
+              </router-link>
+
+            </div>
+          </div>
+          <div class="hidden sm:ml-6 sm:flex sm:items-center">
+            <button class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <span class="sr-only">通知を見る</span>
+              <bell-icon class="h-6 w-6" />
+            </button>
+            <div class="ml-3 relative">
+              <div>
+                <button class="bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="user-menu" aria-expanded="false" aria-haspopup="true">
+                  <span class="sr-only">メニューを開く</span>
+                  <img class="h-8 w-8 rounded-full" src="/placeholder.svg?height=32&width=32" alt="ユーザー" />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="-mr-2 flex items-center sm:hidden">
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+              <span class="sr-only">メニューを開く</span>
+              <menu-icon v-if="!mobileMenuOpen" class="block h-6 w-6" />
+              <x-icon v-else class="block h-6 w-6" />
+            </button>
+          </div>
+        </div>
       </div>
     </nav>
-  </header>
+  </div>
 </template>
 
+<script>
+import { ref } from 'vue';
+import { BellIcon, MenuIcon, XIcon } from 'lucide-vue-next';
+
+export default {
+  components: {
+    BellIcon,
+    MenuIcon,
+    XIcon,
+  },
+  setup() {
+    const mobileMenuOpen = ref(false);
+
+    return {
+      mobileMenuOpen,
+    };
+  },
+};
+</script>
+
 <style scoped>
-header {
-  /* background-color: #333;  propsで制御するため削除 */
-  color: white; /* propsで制御するため基本色は削除 */
-  padding: 10px;
-}
-
-nav ul {
-  display: flex;
-  justify-content: space-around;
-  list-style: none;
-  padding: 0; /* デフォルトのパディングをリセット */
-  margin: 0; /* デフォルトのマージンをリセット */
-}
-
-nav a {
-  /* color: white;  propsで制御するため削除 */
-  text-decoration: none;
-  padding: 0.5rem 1rem; /* リンクにパディングを追加 */
-  display: inline-block; /* パディングが正しく適用されるように */
-}
-
-/* 必要に応じて、ホバー時やアクティブ時のスタイルを追加 */
-nav a:hover,
-nav a:focus {
-  background-color: rgba(255, 255, 255, 0.1); /* わずかに背景色を変更 */
-}
-
-/*stickyの時のスタイル*/
-.sticky {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000; /* 他の要素より前面に */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 影をつけて浮いているように */
-}
-
-/*ダークモードのスタイル*/
-.bg-dark {
-  background-color: #333;
-}
-
-/* Transparent */
-.bg-transparent {
-    background-color: transparent !important; /* !important to override inline styles if needed */
-}
-
-/* Light */
-.bg-white {
-  background-color: #fff;
-}
+/* 必要に応じてスタイルを追加 */
 </style>
