@@ -16,6 +16,9 @@ services:
       timeout: 5s
       retries: 5
 
+    networks:  # 追加
+      - market_network
+
   backend:
     build:
       context: ./backend
@@ -37,6 +40,9 @@ services:
       SECRET_KEY: ${SECRET_KEY}
       DEBUG: "True"
 
+    networks:  # 追加
+      - market_network
+
   frontend:
     build:
       context: ./frontend
@@ -47,13 +53,21 @@ services:
       # 追加
       - node_modules:/app/node_modules # これがないとnode_modulesが消える
     ports:
-      - "8080:8080"
+      - "8081:8080"
     depends_on:
       - backend
-    environment:
-      - VUE_APP_API_BASE_URL=http://backend:8000
+    # environment:
+    #   - VUE_APP_API_BASE_URL=http://backend:8000
+
+    # command: npm run serve  # 開発サーバーを起動
+    networks:  # 追加
+      - market_network
 
 volumes:
   postgres_data:
 
   node_modules: # 追加
+
+networks:  # これを追加
+  market_network:
+    driver: bridge

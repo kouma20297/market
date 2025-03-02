@@ -25,7 +25,12 @@ SECRET_KEY = "django-insecure-4v45ufa))mgof(a%wy_exmqu9^68^38*(5-i1_y+6_kt&f^7m*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# --- 変更点 (1): CORS_ALLOWED_ORIGINS を追加 ---
+CORS_ALLOW_ALL_ORIGINS = True
+# ------------------------------------------
+
+
+ALLOWED_HOSTS = ["backend", "localhost", "127.0.0.1", "*"]
 
 
 # Application definition
@@ -37,12 +42,17 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "apps.accounts",  # 追加
+    'corsheaders',
+    "apps.accounts", 
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    # --- 変更点 (2): CorsMiddleware を CommonMiddleware の上に追加 ---
+    'corsheaders.middleware.CorsMiddleware',
+    "django.middleware.common.CommonMiddleware",
+     # -------------------------------------------------------
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",

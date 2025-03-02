@@ -1,4 +1,10 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+// src/main.js
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router'; // Vue Router をインポート
 
-createApp(App).mount('#app')
+const app = createApp(App);
+
+app.use(router); // Vue Router を使用
+
+app.mount('#app');
