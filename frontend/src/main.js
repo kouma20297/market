@@ -1,22 +1,20 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import router from './router'; // Vue Router をインポート
-import "./assets/tailwind.css"; 
-
-// BootstrapVue3 をインポート
+import router from './router';
+import "./assets/tailwind.css";
 import { BootstrapVue3 } from 'bootstrap-vue-3';
+// すべてのLucideアイコンをインポート
+import * as LucideIcons from 'lucide-vue-next';
 
-// Bootstrap の CSS と BootstrapVue3 の CSS をインポート
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import 'bootstrap-vue-3/dist/bootstrap-vue-3.css';
-// import './assets/css/styles.css';
-// import './assets/js/scripts.js';
-
-
-// Vue アプリケーションを作成し、BootstrapVue3 を使用
 const app = createApp(App);
 
-app.use(BootstrapVue3); // BootstrapVue3 を使用
-app.use(router); // Vue Router を使用
+app.use(BootstrapVue3);
+app.use(router);
+
+// Lucideのすべてのアイコンをグローバルコンポーネントとして登録
+for (const [key, component] of Object.entries(LucideIcons)) {
+    app.component(key, component);
+}
+
 
 app.mount('#app');
